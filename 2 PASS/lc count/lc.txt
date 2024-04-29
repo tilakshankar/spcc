@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    FILE *input, *operation;
+    int lc = 100;
+    char l[10], op[10], ope[10];
+
+    printf("%d",lc);
+    operation=fopen("operation.txt","w");
+    input=fopen("input.txt","r");
+    fscanf(input,"%s\t%s\t%s\n",l,op,ope);
+
+    while(!feof(input))
+    {
+        fscanf(input,"%s\t%s\t%s\n",l,op,ope);
+        if(strcmp(op,"START")!=0)
+        {
+            printf("\n%d",lc);
+            fprintf(operation,"%d\t",lc);
+            fprintf(operation,"%s\t%s\t%s\n",l,op,ope);
+            lc++;
+        }
+    }
+
+
+    fclose(operation);
+    return 0;
+
+    return 0;
+}

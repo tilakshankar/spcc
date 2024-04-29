@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    FILE *input, *LIT;
+    int c = 0;
+    char l[10], op[10], ope[10];
+
+    LIT = fopen("lit.txt", "w");
+    input = fopen("input.txt", "r");
+
+    if (input) {
+        while (fscanf(input, "%s %s %s", l, op, ope) == 3) {
+            if (ope[0] == '=') {
+                c++;
+                fprintf(LIT, "%d\t%s\n", c, ope);
+            }
+        }
+        fclose(input);
+        fclose(LIT);
+        printf("Literal table generated successfully!\n");
+    } else {
+        printf("Failed to open input file.\n");
+    }
+
+    return 0;
+}

@@ -1,0 +1,12 @@
+Label	opcode	operand
+**	START	100
+A	ADD	B
+B	SUB	C
+**	MOVER	='5'
+**	READ	='12'
+**	PRINT	='13'
+**	ADD	='19'
+**	SUB	='23'
+**	READ	='45'
+**	LTORG	**
+**	ADD	='19'

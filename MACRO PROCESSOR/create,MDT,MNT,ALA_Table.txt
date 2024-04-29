@@ -1,0 +1,99 @@
+*************Create MDT Table*************
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    FILE *input = fopen("input.txt", "r");
+    FILE *mdt = fopen("MDT.txt", "w");
+
+    char col1[50], col2[50];
+    int mdtc = 0;
+
+    fprintf(mdt, "Index\tCode\n");
+
+    while (fscanf(input, "%s", col1) != EOF) {
+        if (strcmp(col1, "MACRO") == 0) {
+            fscanf(input, "%s", col1); // Read macro name
+            fprintf(mdt, "%d\t", ++mdtc); // Increment MDT index and print
+            fprintf(mdt, "%s\t", col1); // Print macro name
+            fscanf(input, "%s", col2); // Read first argument
+            fprintf(mdt, "%s\n", col2); // Print first argument
+            while (fscanf(input, "%s", col1) != EOF && strcmp(col1, "MEND") != 0) {
+                fprintf(mdt, "%d\t%s\n", ++mdtc, col1); // Print MDT index and code
+            }
+            fprintf(mdt, "%d\tMEND\n", ++mdtc);
+        }
+    }
+
+    fclose(input);
+    fclose(mdt);
+    printf("MDT table created successfully.\n");
+
+    return 0;
+}
+
+***************2.	Prepare MNT table to maintain MDT index********
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    FILE *input = fopen("input.txt", "r");
+    FILE *mnt = fopen("MNT.txt", "w");
+
+    char col1[50], col2[50];
+    int mntc = 0, mdtc = 0;
+
+    fprintf(mnt, "Index\tM_name\tMDT_Index\n");
+
+    while (fscanf(input, "%s", col1) != EOF) {
+        if (strcmp(col1, "MACRO") == 0) {
+            mntc++;
+            fscanf(input, "%s", col1); // Read macro name
+            fprintf(mnt, "%d\t%s\t%d\n", mntc, col1, mdtc + 1);
+            while (fscanf(input, "%s", col1) != EOF && strcmp(col1, "MEND") != 0) {
+                mdtc++;
+            }
+            mdtc++;
+        }
+    }
+
+    fclose(input);
+    fclose(mnt);
+    printf("MNT table created successfully.\n");
+
+    return 0;
+}
+************************3.	Prepare ALA************************
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    FILE *input = fopen("input.txt", "r");
+    FILE *ala = fopen("ALA.txt", "w");
+
+    char col1[50], col2[50];
+    int alac = 0;
+
+    fprintf(ala, "Index\tA_name\n");
+
+    while (fscanf(input, "%s", col1) != EOF) {
+        if (strcmp(col1, "MACRO") == 0) {
+            fscanf(input, "%s", col2); // Read macro name
+            fscanf(input, "%s", col1); // Read first argument
+            fprintf(ala, "1\t%s\n", col1);
+            while (fscanf(input, "%s", col1) != EOF && strcmp(col1, "MEND") != 0) {
+                // Do nothing, just skip until MEND
+            }
+        }
+    }
+
+    fclose(input);
+    fclose(ala);
+    printf("ALA table created successfully.\n");
+
+    return 0;
+}
+

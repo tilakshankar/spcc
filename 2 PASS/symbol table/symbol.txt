@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    FILE *input, *sym;
+    int s = 0;
+    char l[10], op[10], ope[10];
+
+    sym = fopen("symbol.txt", "w");
+    input = fopen("input.txt", "r");
+
+    if (input) {
+        while (fscanf(input, "%s %s %s", l, op, ope) == 3) {
+            if (strcmp(l, "**") != 0) {
+                s++;
+                fprintf(sym, "%d\t%s\n", s, l);
+            }
+        }
+        fclose(input);
+        fclose(sym);
+        printf("Symbol table generated successfully!\n");
+    } else {
+        printf("Failed to open input file.\n");
+    }
+
+    return 0;
+}

@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    char L[20], op[20], ope[20], LC[20], ds[20], addr[20];
+    FILE *opt, *mc, *mc1;
+    opt = fopen("operation.txt", "r");
+    mc = fopen("machine_code.txt", "w"); 
+
+    while (fscanf(opt, "%s %s %s %s", LC, L, op, ope) != EOF) { 
+        if (strcmp(op, "ADD") == 0) {
+            strcpy(op, "01");
+            fprintf(mc, "%s\t%s\t%s\t%s\n", LC, L, op, ope);
+        } else if (strcmp(op, "SUB") == 0) {
+            strcpy(op, "02");
+            fprintf(mc, "%s\t%s\t%s\t%s\n", LC, L, op, ope);
+        } else if (strcmp(op, "MULT") == 0) {
+            strcpy(op, "03");
+            fprintf(mc, "%s\t%s\t%s\t%s\n", LC, L, op, ope);
+        } else if (strcmp(op, "DIV") == 0) {
+            strcpy(op, "04");
+            fprintf(mc, "%s\t%s\t%s\t%s\n", LC, L, op, ope);
+        } else if (strcmp(op, "MOVER") == 0) {
+            strcpy(op, "05");
+            fprintf(mc, "%s\t%s\t%s\t%s\n", LC, L, op, ope);
+        } else if (strcmp(op, "MOVEM") == 0) {
+            strcpy(op, "06");
+            fprintf(mc, "%s\t%s\t%s\t%s\n", LC, L, op, ope);
+        } else if (strcmp(op, "READ") == 0) {
+            strcpy(op, "07");
+            fprintf(mc, "%s\t%s\t%s\t%s\n", LC, L, op, ope);
+        } else if (strcmp(op, "COMP") == 0) {
+            strcpy(op, "08");
+            fprintf(mc, "%s\t%s\t%s\t%s\n", LC, L, op, ope);
+        } else if (strcmp(op, "PRINT") == 0) {
+            strcpy(op, "09");
+            fprintf(mc, "%s\t%s\t%s\t%s\n", LC, L, op, ope);
+        } else if (strcmp(op, "STOP") == 0) {
+            strcpy(op, "10");
+            fprintf(mc, "%s\t%s\t%s\t%s\n", LC, L, op, ope);
+        } else if (strcmp(op, "DS") == 0) {
+            strcpy(addr, LC);
+            strcpy(ds, L);
+            printf("%s\t%s\n", addr, ds);
+            mc1 = fopen("machine_code1.txt", "w"); 
+            fprintf(mc1, "MACHINE CODE\n");
+            fclose(mc1); 
+        }
+    }
+    fclose(opt);
+    fclose(mc);
+    return 0;
+}

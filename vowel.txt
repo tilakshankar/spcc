@@ -1,0 +1,30 @@
+a. VOWEL OR NOT
+%{
+  #include<stdio.h>
+  int v=0, c=0;
+%}
+
+%%
+[ \t\n]+
+[aeiouAEIOU] {printf("\n%s is a vowel",yytext); v++;}
+[^aeiouAEIOU] {printf("\n%s is a consonant",yytext); c++;}
+%%
+
+int  main()
+{
+  printf("enter the input string");
+  yylex();
+  printf("no.of vowels %d\n",v);
+  printf("no.of consonants %d\n",c);
+}
+
+int yywrap(){
+ return 1;
+}
+
+
+Run 
+savefile as vowel.l
+flex vowel.l
+gcc lex.yy.c
+./a.out

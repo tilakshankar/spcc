@@ -1,0 +1,178 @@
+Q1 
+a. VOWEL OR NOT
+%{
+	#include<stdio.h>
+	int v=0, c=0;
+%}
+
+%%
+[ \t\n]+
+[aeiouAEIOU] {printf("\n%s is a vowel",yytext); v++;}
+[^aeiouAEIOU] {printf("\n%s is a consonant",yytext); c++;}
+%%
+
+int  main()
+{
+	printf("enter the input string");
+	yylex();
+	printf("no.of vowels %d\n",v);
+	printf("no.of consonants %d\n",c);
+}
+
+int yywrap(){
+ return 1;
+}
+
+flex vowel.l
+gcc lex.yy.c
+a.exe
+.
+.
+.
+.
+.
+
+b.word count, length of the sentence and count of alphabets
+%{
+int wordCount = 0;
+int sentenceLength = 0;
+int alphabetCount = 0;
+%}
+
+%%
+[a-zA-Z]+ { alphabetCount += yyleng; wordCount++; }
+. { sentenceLength++; }
+
+%%
+
+int main() {
+    yylex();
+    printf("Number of words: %d\n", wordCount);
+    printf("Sentence length: %d\n", sentenceLength);
+    printf("Number of alphabets: %d\n", alphabetCount);
+    return 0;
+}
+
+int yywrap(){
+ return 1;
+}
+
+flex vowel.l
+gcc lex.yy.c
+a.exe
+
+.
+.
+.
+.
+.
+
+c. STRONG PASSWORDD 
+%{
+#include <stdio.h>
+#include <ctype.h>
+%}
+
+%%
+[a-zA-Z]   { lowercase_flag = 1; }
+[A-Z]      { uppercase_flag = 1; }
+[0-9]      { digit_flag = 1; }
+[^a-zA-Z0-9] { special_char_flag = 1; }
+. ;
+
+%%
+
+int main() {
+    yylex();
+    if (lowercase_flag && uppercase_flag && digit_flag && special_char_flag) {
+        printf("Password is strong.\n");
+    } else {
+        printf("Password is not strong.\n");
+    }
+    return 0;
+}
+
+
+int yywrap(){
+return 1;
+}
+
+flex strongpass.l
+gcc lex.yy.c -o strongpass -std=c99
+strongpass
+
+.
+.
+.
+.
+.
+
+
+Q4 THREE ADDRESS CODE
+#include<stdio.h> 
+#include<conio.h> 
+#include<stdlib.h>
+#include<string.h> 
+struct three {
+char data[10], 
+temp[7];
+} 
+s[30];
+
+int main() {
+char d1[7], d2[7]="t"; 
+int i=0, j=1, len=0; 
+FILE *f1,*f2; 
+f1 = fopen("input.txt", "r");
+f2 = fopen("output.txt", "w");
+
+
+while (fscanf(f1, "%s", s[len].data) != EOF) 
+len++;
+
+strcat(d2,	d1); 
+strcpy(s[j].temp, d2); 
+strcpy(d1, "");
+strcpy(d2, "t");
+
+
+if (!strcmp(s[3].data, "+")) {
+fprintf(f2,	"%s=%s+%s",	s[j].temp,	s[i+2].data, s[i+4].data); j++; }
+else if (!strcmp(s[3].data, "-")) {
+fprintf(f2, "%s=%s-%s", s[j].temp, s[i+2].data, s[i+4].data); j++;
+}
+else if (!strcmp(s[3].data, "*")) {
+fprintf(f2, "%s=%s*%s", s[j].temp, s[i+2].data, s[i+4].data); j++;
+}
+
+
+for (i=4; i<len-2; i+=2) { 
+strcat(d2,	d1);
+ 
+strcpy(s[j].temp,	d2);	
+if (!strcmp(s[i+1].data, "+"))
+fprintf(f2, "\n%s=%s+%s", s[j].temp, s[j-1].temp, s[i+2].data);
+else if (!strcmp(s[i+1].data, "-")) 
+fprintf(f2, "\n%s=%s-%s",s[j].temp, s[j-1].temp, s[i+2].data);
+else if (!strcmp(s[i+1].data, "*"))
+fprintf(f2, "\n%s=%s*%s", s[j].temp, s[j-1].temp, s[i+2].data); 
+strcpy(d1, "");
+strcpy(d2,	"t"); j++; }
+fprintf(f2,	"\n%s=%s",	s[0].data,	s[j-1].temp);	
+fclose(f1);	
+fclose(f2);	
+getch(); 
+return 0;
+}
+make input.txt usme write below given equation
+result = a + b * c
+result = a + b - d * c
+
+the answer will be in output.txt 
+.
+.
+.
+.
+.
+
+Q5 STUDY OF LLVM

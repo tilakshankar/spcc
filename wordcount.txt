@@ -1,0 +1,66 @@
+%{
+#include <stdio.h>
+int wordCount = 0;
+int sentenceLength = 0;
+int alphabetCount = 0;
+%}
+
+%%
+[a-zA-Z]+ {
+    alphabetCount += yyleng;  // Count the length of each word to get total alphabet count
+    wordCount++;              // Increment word count for each word
+}
+[.!?] {
+    sentenceLength++;         // Consider punctuation as part of sentence length
+}
+\n {                          // Detect end of input
+    return 0;                 // Return to main function
+}
+. ;                           // Ignore other characters
+
+%%
+
+int main() {
+    char line[1024];          // Buffer to hold input line
+
+    printf("Enter sentences (enter an empty line to finish):\n");
+    while (1) {
+        printf("> ");
+        fflush(stdout);  // Ensure prompt is visible
+        if (fgets(line, sizeof(line), stdin) == NULL || line[0] == '\n')
+            break;       // Exit loop if input is an empty line
+
+        // Process the input
+        yy_scan_string(line);
+        yylex();
+
+        // Clear the lexer buffer
+        yy_delete_buffer(YY_CURRENT_BUFFER);
+
+        // Optionally reset counters if needed for each line
+        printf("Current input stats:\n");
+        printf("Number of words: %d\n", wordCount);
+        printf("Sentence length: %d\n", sentenceLength);
+        printf("Number of alphabets: %d\n", alphabetCount);
+
+        // Reset for next input
+        wordCount = 0;
+        sentenceLength = 0;
+        alphabetCount = 0;
+    }
+
+    return 0;
+}
+
+int yywrap() {
+    return 1;
+}
+
+
+
+
+Run 
+savefile as wordcount.l
+flex wordcount.l
+gcc lex.yy.c
+./a.out
